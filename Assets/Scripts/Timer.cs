@@ -15,8 +15,11 @@ public class Timer : MonoBehaviour
         StartCoroutine(TimerFlow());
     }
 
-    IEnumerator TimerFlow()
+    IEnumerator TimerFlow() // IEnumerator - интерфейс
     {
+        /*sec++;
+        sec = sec % 59;*/
+        
         while (true)
         {
             if (sec == 0)
