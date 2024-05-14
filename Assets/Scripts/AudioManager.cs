@@ -12,6 +12,12 @@ public class AudioManager : MonoBehaviour
     private void Start()
     {
         audioSource = GetComponent<AudioSource>();
+        
+    }
+
+    private void Update()
+    {
+        audioSource.volume = PlayerPrefs.GetFloat(StaticMenuFields.Value);
     }
 
     public void PlayPuchOnCollision()
