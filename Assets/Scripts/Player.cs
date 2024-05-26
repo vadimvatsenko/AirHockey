@@ -17,7 +17,7 @@ public class Player : Unit
         float clampedX = Mathf.Clamp(mousePosition.x, unitBorderStopper.Left, unitBorderStopper.Right); // высчитываем ограничение по X
         float clampedY = Mathf.Clamp(mousePosition.y, unitBorderStopper.Bottom, unitBorderStopper.Top); // высчитываем ограничение по Y
 
-        rb.MovePosition(new Vector3(clampedX, clampedY, 0)); // позиция игрока, только через Rigidbody
+        rb.MovePosition(new Vector3(clampedX, clampedY, 0)); // позиция игрока, только через Rigidbody/
         
     }
 
