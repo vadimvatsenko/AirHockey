@@ -6,13 +6,13 @@ public class AudioManager : MonoBehaviour
 {
     [SerializeField] AudioClip PuckCollision;
     [SerializeField] AudioClip Goal;
+    [SerializeField] AudioClip WallCollision;
 
     private AudioSource audioSource;
 
     private void Start()
     {
-        audioSource = GetComponent<AudioSource>();
-        
+        audioSource = GetComponent<AudioSource>();        
     }
 
     private void Update()
@@ -28,5 +28,10 @@ public class AudioManager : MonoBehaviour
     public void PlayGoalSound()
     {
         audioSource.PlayOneShot(Goal);
+    }
+
+    public void PlayWallSound() 
+    { 
+        audioSource.PlayOneShot(WallCollision);
     }
 }

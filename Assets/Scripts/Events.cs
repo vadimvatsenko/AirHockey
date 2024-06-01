@@ -1,3 +1,4 @@
+#nullable enable
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -23,7 +24,6 @@ public class Events : MonoBehaviour
         resetGameAfterGoal?.Invoke();
         
     }
-
     public static void InvokePlaySoundsEffect(AudioSource audioSource)
     {
         playSoundsEffect?.Invoke(audioSource);

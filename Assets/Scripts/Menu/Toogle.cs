@@ -14,13 +14,12 @@ public class Toogle : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
     RectTransform transformChildParent;
     RectTransform transformSliderFill1;
     RectTransform transformSliderFill2;
+    RectTransform gearImg;
 
     private Image sliderColor;
-    private float sliderWidth;
+    //private float sliderWidth;
 
     private bool isToggle = false;
-
-
     
     private void Start()
     {
@@ -30,14 +29,15 @@ public class Toogle : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
         transformChildParent = this.transform.GetComponent<RectTransform>();
         transformSliderFill1 = transform.parent.GetChild(0).GetComponent<RectTransform>();
         transformSliderFill2 = transform.parent.GetChild(1).GetComponent<RectTransform>();
-
         sliderColor = transform.parent.GetChild(0).GetComponent<Image>();
-        sliderWidth = transformSliderFill1.sizeDelta.x;
+        gearImg = GetComponent<RectTransform>();
     }
     private void Update()
     {                         
         Vector3 worldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition); // получаем мировые координаты
         Vector3 localPos = transformSiderParent.InverseTransformPoint(worldPos); // InverseTransformPoint преобразовывает мировые координаты в координаты родителя (локальные координаты)
+
+        
 
         float leftStoper = (transformSiderParent.rect.size.x / -2) + (transformChildParent.rect.size.x / 2);
         float rightStoper = (transformSiderParent.rect.size.x / 2) - (transformChildParent.rect.size.x / 2);
@@ -48,16 +48,23 @@ public class Toogle : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
             this.transform.localPosition = new Vector3(clampedX, this.transform.position.y);
 
             float percent = Mathf.InverseLerp(leftStoper, rightStoper, clampedX); // InverseLerp - нормализует значение, от 0 до 1
-            ChangeColorPercent(percent, new Color(255f, 0f, 0f, percent));
-            //transformSliderFill1.sizeDelta = new Vector2(percent * sliderWidth, transformSliderFill1.sizeDelta.y);
 
+            //ChangeColorPercent(percent, new Color(255f, 0f, 0f, percent));
+            
             transformSliderFill1.GetComponent<Image>().fillAmount = percent;
 
             transformSliderFill2.GetComponent<Image>().fillAmount = 1 - percent;
 
             transformSliderFill2.GetComponent<Image>().color = new Color(0f, 0f, 255f, 1 - percent);
+            
 
             sliderCounter.text = percent.ToString("0" + "%");
+            sliderCounter.color = Color.Lerp(Color.red, Color.green, percent);
+
+            
+
+            this.GetComponent<RectTransform>().localRotation = Quaternion.Euler(0f, 0f, -percent * 360f); // Quaternion.Euler - создан для ротации фигуры
+
 
             PlayerPrefs.SetFloat(StaticMenuFields.Value, percent);
         }
@@ -67,6 +74,7 @@ public class Toogle : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
     {
         sliderColor.color = color;
     }
+    
 
     public void OnPointerDown(PointerEventData eventData)
     {           

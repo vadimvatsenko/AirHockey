@@ -5,7 +5,7 @@ using UnityEngine;
 public class HockeyPuck : MonoBehaviour
 {
     [SerializeField] AudioManager audioManager;
-    [SerializeField] ParticleSystem effect;
+    ParticleSystem effect;
 
     Rigidbody2D rb;
     private Vector2 prevPos;
@@ -13,7 +13,7 @@ public class HockeyPuck : MonoBehaviour
     private void Start()
     {
         rb = GetComponent<Rigidbody2D>();
-        //effect = GetComponentInChildren<ParticleSystem>();
+        effect = GetComponentInChildren<ParticleSystem>();
     }
 
     private void Update()
@@ -37,23 +37,22 @@ public class HockeyPuck : MonoBehaviour
         Vector2 direction = this.transform.position - collision.transform.position;
         Vector2 force = prevPos - rb.position;
 
-        effect.transform.position = collision.contacts[0].point;
-        effect.Play();
-        audioManager.PlayPuchOnCollision();
+        //effect.transform.position = collision.contacts[0].point;
+        //effect.Play();
+        
 
         if (collision.gameObject.GetComponent<Player>() || collision.gameObject.GetComponent<Enemy>())
         {
             rb.AddForce(direction.normalized * force, ForceMode2D.Impulse);
+            audioManager.PlayPuchOnCollision();
         }
         else
         {
             
             Vector2 reflectedVector = Vector3.Reflect(prevPos.normalized, collision.contacts[0].normal); 
-            rb.AddForce(reflectedVector.normalized * force, ForceMode2D.Impulse); // *force.magnitude           
+            rb.AddForce(reflectedVector.normalized * force, ForceMode2D.Impulse); // *force.magnitude
+            audioManager.PlayWallSound();
         }
-
-
-
     }
 
     private void HandleResetPuck()
