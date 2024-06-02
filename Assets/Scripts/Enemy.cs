@@ -5,7 +5,7 @@ using UnityEngine;
 public class Enemy : Unit
 {
     [SerializeField] Rigidbody2D Puck;
-    [SerializeField] float speed = 2.5f;
+    [SerializeField] float speed = 10f;
     private Vector2 startPosition;
     private Vector2 targetPosition;
 
@@ -14,22 +14,17 @@ public class Enemy : Unit
         base.Start();
         startPosition = rb.position;
 
-        unitBorderStopper = new BoardStopper(Board.GetChild(0).position.x + (unitSize.x / 2) + (Board.GetChild(0).GetComponent<Collider2D>().bounds.size.x / 2),
-                                             Board.GetChild(1).position.x - (unitSize.x / 2) - (Board.GetChild(1).GetComponent<Collider2D>().bounds.size.x / 2),
-                                             Board.GetChild(2).position.y - (unitSize.y / 2) - (Board.GetChild(2).GetChild(0).GetComponent<Collider2D>().bounds.size.y / 2),
-                                             Board.GetChild(4).position.y - (unitSize.y / 2));
-    }
-
-    private void Update()
-    {
-        
+        unitBorderStopper = new BoardStopper(Left.position.x + this.GetComponent<Collider2D>().bounds.size.x / 2,
+                                            Right.position.x - this.GetComponent<Collider2D>().bounds.size.x / 2,
+                                            Top.position.x + this.GetComponent<Collider2D>().bounds.size.x / 2,
+                                            Center.position.x);
     }
 
     private void FixedUpdate()
     {
         float movemetSpeed;
         
-        if(Puck.position.y < unitBorderStopper.Bottom)
+        if(Puck.position.y < 0)
         {
             movemetSpeed = speed * Random.Range(0.1f, 0.3f);
             targetPosition = new Vector2(Mathf.Clamp(Puck.position.x, unitBorderStopper.Left, unitBorderStopper.Right), startPosition.y );           

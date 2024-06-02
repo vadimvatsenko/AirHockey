@@ -38,20 +38,20 @@ public class HockeyPuck : MonoBehaviour
         Vector2 force = prevPos - rb.position;
 
         //effect.transform.position = collision.contacts[0].point;
-        //effect.Play();
+        effect.Play();
         
+        audioManager.PlayPuchOnCollision();
 
         if (collision.gameObject.GetComponent<Player>() || collision.gameObject.GetComponent<Enemy>())
         {
             rb.AddForce(direction.normalized * force, ForceMode2D.Impulse);
-            audioManager.PlayPuchOnCollision();
         }
         else
         {
             
             Vector2 reflectedVector = Vector3.Reflect(prevPos.normalized, collision.contacts[0].normal); 
             rb.AddForce(reflectedVector.normalized * force, ForceMode2D.Impulse); // *force.magnitude
-            audioManager.PlayWallSound();
+            //audioManager.PlayWallSound();
         }
     }
 
