@@ -51,7 +51,7 @@ public class Toogle : MonoBehaviour, IPointerDownHandler, IPointerUpHandler // è
    
     public void OnPointerDown(PointerEventData eventData)
     {
-        Debug.Log(eventData);
+        
         isToggle = true;
     }
 

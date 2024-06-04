@@ -31,13 +31,15 @@ public class Unit : MonoBehaviour
 
         unitBorderStopper = new BoardStopper(Left.position.x + this.GetComponent<Collider2D>().bounds.size.x / 2,
                                             Right.position.x - this.GetComponent<Collider2D>().bounds.size.x / 2,
-                                            Center.position.x,
-                                            -12.65f + this.GetComponent<Collider2D>().bounds.size.x / 2);
+                                            Center.position.y,
+                                            Bottom.position.y + this.GetComponent<Collider2D>().bounds.size.x / 2);
     }
 
     private void Update()
     {
-        prevPos = rb.velocity; // velocity - направление        
+        prevPos = rb.velocity; // velocity - направление
+                               // 
+        
     }
 
 }

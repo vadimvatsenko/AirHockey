@@ -14,6 +14,7 @@ public class HockeyPuck : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
         effect = GetComponentInChildren<ParticleSystem>();
+        //this.gameObject.SetActive(false);
     }
 
     private void Update()
@@ -24,23 +25,21 @@ public class HockeyPuck : MonoBehaviour
     private void OnEnable()
     {
         Events.resetGameAfterGoal += HandleResetPuck;
+        Events.enableOrDisableGameObject += DisableOrEnablePuck;
     }
 
     private void OnDestroy()
     {
         Events.resetGameAfterGoal -= HandleResetPuck;
+        Events.enableOrDisableGameObject += DisableOrEnablePuck;
     }
 
 
     private void OnCollisionEnter2D(Collision2D collision) 
     {
+
         Vector2 direction = this.transform.position - collision.transform.position;
         Vector2 force = prevPos - rb.position;
-
-        //effect.transform.position = collision.contacts[0].point;
-        effect.Play();
-        
-        audioManager.PlayPuchOnCollision();
 
         if (collision.gameObject.GetComponent<Player>() || collision.gameObject.GetComponent<Enemy>())
         {
@@ -48,11 +47,10 @@ public class HockeyPuck : MonoBehaviour
         }
         else
         {
-            
-            Vector2 reflectedVector = Vector3.Reflect(prevPos.normalized, collision.contacts[0].normal); 
+            Vector2 reflectedVector = Vector3.Reflect(prevPos.normalized, collision.contacts[0].normal);
             rb.AddForce(reflectedVector.normalized * force, ForceMode2D.Impulse); // *force.magnitude
-            //audioManager.PlayWallSound();
         }
+        audioManager.PlayPuchOnCollision();
     }
 
     private void HandleResetPuck()
@@ -64,5 +62,11 @@ public class HockeyPuck : MonoBehaviour
     {       
         yield return new WaitForSeconds(3);
         rb.position = new Vector2(0, 0);
+    }
+
+    private void DisableOrEnablePuck()
+    {
+        bool active = this.gameObject.activeSelf;
+        this.gameObject.SetActive(!active);
     }
 }

@@ -16,6 +16,7 @@ public class GoalTimer : MonoBehaviour
 
         textMeshProComponent = GetComponent<TextMeshProUGUI>();
         StartCoroutine(TimerToGo());
+
     }
 
     IEnumerator TimerToGo()
@@ -29,9 +30,10 @@ public class GoalTimer : MonoBehaviour
 
             if (startTimer <= 0)
             {
-                textMeshProComponent.text = "GO";
+                textMeshProComponent.text = "GO!";
                 yield return new WaitForSeconds(1);
                 this.gameObject.SetActive(false);
+                //Events.InvokeEnableOrDisableGameObject();
                 yield break;
             }
         }

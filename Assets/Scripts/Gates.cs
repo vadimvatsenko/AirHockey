@@ -6,9 +6,15 @@ public class Gates : MonoBehaviour
 {
     [SerializeField] bool isEnemyGate = true;
     ParticleSystem fire;
+
     private void Start()
     {
-        fire = GetComponentInChildren<ParticleSystem>();
+        
+    }
+
+    private void Update()
+    {
+        
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -16,7 +22,7 @@ public class Gates : MonoBehaviour
         
         if (collision.gameObject.GetComponent<HockeyPuck>())
         {
-            fire.Play();
+            //fire.Play();
             Events.InvokeChangeScore(isEnemyGate);
             Events.InvokeResetGameAfterGoal();
         }
