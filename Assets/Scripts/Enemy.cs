@@ -27,7 +27,7 @@ public class Enemy : Unit
         {
             movemetSpeed = speed * Random.Range(0.1f, 0.3f);
             targetPosition = new Vector2(Mathf.Clamp(Puck.position.x, unitBorderStopper.Left, unitBorderStopper.Right), startPosition.y );
-            Debug.Log(1);
+            
         }
         
         else 
@@ -35,7 +35,7 @@ public class Enemy : Unit
             
             movemetSpeed = Random.Range(speed * 0.4f, speed);
             targetPosition = new Vector2(Mathf.Clamp(Puck.position.x, unitBorderStopper.Left, unitBorderStopper.Right), Mathf.Clamp(Puck.position.y, unitBorderStopper.Bottom, unitBorderStopper.Top));
-            Debug.Log(3);
+            
         }
 
         rb.MovePosition(Vector2.MoveTowards(rb.position, targetPosition, movemetSpeed * Time.fixedDeltaTime));

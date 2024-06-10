@@ -5,16 +5,12 @@ using UnityEngine;
 public class HockeyPuck : MonoBehaviour
 {
     [SerializeField] AudioManager audioManager;
-    ParticleSystem effect;
-
     Rigidbody2D rb;
     private Vector2 prevPos;
 
     private void Start()
     {
         rb = GetComponent<Rigidbody2D>();
-        effect = GetComponentInChildren<ParticleSystem>();
-        //this.gameObject.SetActive(false);
     }
 
     private void Update()
@@ -39,16 +35,17 @@ public class HockeyPuck : MonoBehaviour
     {
 
         Vector2 direction = this.transform.position - collision.transform.position;
+        Debug.Log(direction);
         Vector2 force = prevPos - rb.position;
 
         if (collision.gameObject.GetComponent<Player>() || collision.gameObject.GetComponent<Enemy>())
         {
-            rb.AddForce(direction.normalized * force, ForceMode2D.Impulse);
+            rb.AddForce(direction.normalized * force.magnitude, ForceMode2D.Force);
         }
         else
         {
             Vector2 reflectedVector = Vector3.Reflect(prevPos.normalized, collision.contacts[0].normal);
-            rb.AddForce(reflectedVector.normalized * force, ForceMode2D.Impulse); // *force.magnitude
+            rb.AddForce(reflectedVector.normalized * force.magnitude, ForceMode2D.Force); // *force.magnitude
         }
         audioManager.PlayPuchOnCollision();
     }

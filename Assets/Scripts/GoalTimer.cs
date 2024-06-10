@@ -11,11 +11,12 @@ public class GoalTimer : MonoBehaviour
 
     private void Start()
     {
-        startTimer = sec;
         this.gameObject.SetActive(true);
-
+        Time.timeScale = 0;
+        startTimer = sec;
         textMeshProComponent = GetComponent<TextMeshProUGUI>();
         StartCoroutine(TimerToGo());
+        
 
     }
 
@@ -26,13 +27,14 @@ public class GoalTimer : MonoBehaviour
         {
             startTimer--;
             textMeshProComponent.text = startTimer.ToString();
-            yield return new WaitForSeconds(1);
+            yield return new WaitForSecondsRealtime(1);
 
             if (startTimer <= 0)
             {
                 textMeshProComponent.text = "GO!";
-                yield return new WaitForSeconds(1);
+                yield return new WaitForSecondsRealtime(1);
                 this.gameObject.SetActive(false);
+                Time.timeScale = 1;
                 //Events.InvokeEnableOrDisableGameObject();
                 yield break;
             }
