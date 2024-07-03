@@ -34,17 +34,16 @@ public class HockeyPuck : MonoBehaviour
     private void OnCollisionEnter2D(Collision2D collision) 
     {
 
-        Vector2 direction = this.transform.position - collision.transform.position;
-        Debug.Log(direction);
+        Vector2 direction = (this.transform.position - collision.transform.position).normalized;
         Vector2 force = prevPos - rb.position;
 
         if (collision.gameObject.GetComponent<Player>() || collision.gameObject.GetComponent<Enemy>())
         {
-            rb.AddForce(direction.normalized * force.magnitude, ForceMode2D.Force);
+            rb.AddForce(direction * force.magnitude, ForceMode2D.Impulse);
         }
         else
         {
-            Vector2 reflectedVector = Vector3.Reflect(prevPos.normalized, collision.contacts[0].normal);
+            Vector2 reflectedVector = (Vector3.Reflect(prevPos.normalized, collision.contacts[0].normal)).normalized;
             rb.AddForce(reflectedVector.normalized * force.magnitude, ForceMode2D.Force); // *force.magnitude
         }
         audioManager.PlayPuchOnCollision();
