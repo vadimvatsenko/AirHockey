@@ -15,14 +15,10 @@ public class GoalTimer : MonoBehaviour
         Time.timeScale = 0;
         startTimer = sec;
         textMeshProComponent = GetComponent<TextMeshProUGUI>();
-        StartCoroutine(TimerToGo());
-        
-
+        StartCoroutine(TimerToGo());        
     }
-
     IEnumerator TimerToGo()
-    {
-        
+    {       
         while (true)
         {
             startTimer--;
@@ -40,7 +36,5 @@ public class GoalTimer : MonoBehaviour
             }
         }
     }
-
-
 
 }

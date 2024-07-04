@@ -17,8 +17,6 @@ public class Timer : MonoBehaviour
 
     IEnumerator TimerFlow() // IEnumerator - интерфейс
     {
-        /*sec++;
-        sec = sec % 59;*/
         
         while (true)
         {

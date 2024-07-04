@@ -20,18 +20,16 @@ public class Player : Unit, IPointerDownHandler, IPointerUpHandler
         float clampedX = Mathf.Clamp(locPos.x, unitBorderStopper.Left, unitBorderStopper.Right); // высчитываем ограничение по X
         float clampedY = Mathf.Clamp(locPos.y, unitBorderStopper.Bottom, unitBorderStopper.Top); // высчитываем ограничение по Y
 
-        rb.MovePosition(new Vector3(clampedX, clampedY, 0)); // позиция игрока, только через Rigidbody//
+        rb.MovePosition(new Vector2(clampedX, clampedY)); // позиция игрока, только через Rigidbody//
 
         if (isPlayer)
         {
             Debug.Log(isPlayer);
-        }
-        
+        }       
     }
 
     public void OnPointerDown(PointerEventData eventData)
     {
-        Debug.Log(eventData);
         isPlayer = true;
     }
 
@@ -39,6 +37,4 @@ public class Player : Unit, IPointerDownHandler, IPointerUpHandler
     {
         isPlayer = false;
     }
-
-
 }
